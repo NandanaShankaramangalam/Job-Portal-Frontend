@@ -1,5 +1,11 @@
+import JobBoard from "./pages/JobBoard";
+
 function App() {
-  return <div className="App">Job Portal</div>;
+  return (
+    <div>
+      <JobBoard />
+    </div>
+  );
 }
 
 export default App;
