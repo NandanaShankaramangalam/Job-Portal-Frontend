@@ -1,9 +1,9 @@
-import JobBoard from "./pages/JobBoard";
+import JobBoardPage from "./pages/JobBoardPage";
 
 function App() {
   return (
     <div>
-      <JobBoard />
+      <JobBoardPage />
     </div>
   );
 }

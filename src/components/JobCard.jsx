@@ -27,7 +27,7 @@ export default function JobCard() {
   };
 
   return (
-    <Card sx={{ ml: 1, mt: 3, maxWidth: 300 }}>
+    <Card sx={{ ml: "15px", mt: 3, maxWidth: 300 }}>
       <Box
         sx={{
           m: 2,

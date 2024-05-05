@@ -13,7 +13,7 @@ export default function Filter({ filter }) {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: "200px" }}>
+      <FormControl sx={{ m: 1, marginLeft: "15px", width: "200px" }}>
         <InputLabel id="demo-simple-select-helper-label">
           {filter.title}
         </InputLabel>
