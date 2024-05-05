@@ -5,9 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { setJobs } from "../redux/actions";
 import Search from "../components/Search";
 import JobCardList from "./JobCardList";
+import Loader from "./Loader";
 
 const JobBoard = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [searchText, setSearchText] = useState();
+  const [selectedFilter, setSelectedFilter] = useState({});
   const [page, setPage] = useState(1);
   const jobState = useSelector((state) => state.jobs);
   const dispatch = useDispatch();
@@ -21,52 +24,14 @@ const JobBoard = () => {
   }, [page]);
 
   const handleScroll = () => {
-    // console.log("Height: ", document.documentElement.scrollHeight);
-    // console.log("Top: ", document.documentElement.scrollTop);
-    // console.log("Window: ", window.innerHeight);
     if (
       window.innerHeight + document.documentElement.scrollTop + 1 >=
       document.documentElement.scrollHeight
     ) {
       setPage((prev) => prev + 1);
-      console.log("loading...");
     }
-    // if (
-    //   window.innerHeight + document.documentElement.scrollTop !==
-    //     document.documentElement.offsetHeight ||
-    //   loading
-    // ) {
-    //   return;
-    // }
-    // fetchData();
   };
 
-  //   useEffect(() => {
-  //     const myHeaders = new Headers();
-  //     myHeaders.append("Content-Type", "application/json");
-
-  //     const body = JSON.stringify({
-  //       limit: 10,
-  //       offset: 0,
-  //     });
-
-  //     const requestOptions = {
-  //       method: "POST",
-  //       headers: myHeaders,
-  //       body,
-  //     };
-
-  //     fetch(
-  //       "https://api.weekday.technology/adhoc/getSampleJdJSON",
-  //       requestOptions
-  //     )
-  //       .then((response) => response.json())
-  //       .then((result) => {
-  //         dispatch(setJobs(result));
-  //         console.log("Response from API", result);
-  //       })
-  //       .catch((error) => console.error(error));
-  //   }, []);
   const fetchData = (offset) => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -81,7 +46,7 @@ const JobBoard = () => {
       headers: myHeaders,
       body,
     };
-
+    setLoading(true);
     fetch(
       "https://api.weekday.technology/adhoc/getSampleJdJSON",
       requestOptions
@@ -89,8 +54,8 @@ const JobBoard = () => {
       .then((response) => response.json())
       .then((res) => {
         const result = [...jobState.jobs, ...res.jdList];
-        console.log("mergedJobs=", result); // Merge new data with existing jobs
         dispatch(setJobs(result));
+        setLoading(false);
         console.log("Response from API", result);
       })
       .catch((error) => console.error(error));
@@ -99,12 +64,33 @@ const JobBoard = () => {
     <>
       <div className="filter-container">
         {filters.map((filter, index) => (
-          <Filter key={index} filter={filter} />
+          <Filter
+            key={index}
+            filter={filter}
+            selectedFilter={selectedFilter}
+            setSelectedFilter={setSelectedFilter}
+          />
         ))}
-        <Search className="search-container" />
+        <Search
+          className="search-container"
+          searchText={searchText}
+          setSearchText={setSearchText}
+        />
       </div>
       <div style={{ paddingBottom: "30px" }}>
-        <JobCardList />
+        <JobCardList selectedFilter={selectedFilter} searchText={searchText} />
+        {loading && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              paddingTop: "20px",
+              color: "gray",
+            }}
+          >
+            <Loader />
+          </div>
+        )}
       </div>
     </>
   );

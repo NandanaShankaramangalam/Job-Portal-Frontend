@@ -1,8 +1,8 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
-export default function Search() {
+export default function Search({ searchText, setSearchText }) {
   return (
     <Box
       component="form"
@@ -12,7 +12,12 @@ export default function Search() {
       noValidate
       autoComplete="off"
     >
-      <TextField id="outlined-basic" label="Search" variant="outlined" />
+      <TextField
+        id="outlined-basic"
+        label="Search Company Name"
+        variant="outlined"
+        onChange={(e) => setSearchText(e.target.value)}
+      />
     </Box>
   );
 }

@@ -1,22 +1,22 @@
 export const filters = [
   {
     title: "Roles",
-    values: ["Frontend Engineer", "Backend Engineer", "Fullstack Engineer"],
+    values: ["Frontend", "Backend", "ios", "Tech Lead"],
   },
   {
-    title: "No Of Employees",
-    values: ["10-50", "50-100", "100-200", "> 200"],
+    title: "Location",
+    values: ["Bangalore", "Mumbai", "Chennai", "Delhi Ncr"],
   },
   {
     title: "Experience",
-    values: ["Entry level", "Mid level", "Senior"],
+    values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   },
   {
     title: "Remote",
-    values: ["On-site", "Hybrid"],
+    values: ["Remote", "On-site", "Hybrid"],
   },
   {
-    title: "Minimum Base Pay Salary",
-    values: ["5-10 lakhs", "10-20 lakhs", "> 20 lakhs"],
+    title: "Min Base Pay",
+    values: [3, 6, 9, 12, 15, 20, 25, 30, 35],
   },
 ];

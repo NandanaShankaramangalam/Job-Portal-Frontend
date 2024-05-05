@@ -1,28 +1,13 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
-import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 import { Box, Button } from "@mui/material";
-
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
 
 export default function JobCard({ job }) {
   const [expanded, setExpanded] = React.useState(false);
 
-  const handleExpandClick = () => {
+  const toggleExpansion = () => {
     setExpanded(!expanded);
   };
 
@@ -51,9 +36,6 @@ export default function JobCard({ job }) {
       </Box>
       <Box sx={{ p: 2, pb: 1, display: "flex" }}>
         <Box>
-          {/* <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
-          </Avatar> */}
           <img src={`${job?.logoUrl}`} alt="..." width="30px" height="40px" />
         </Box>
         <Box sx={{ display: "flex", flexDirection: "column", ml: 2 }}>
@@ -102,11 +84,11 @@ export default function JobCard({ job }) {
             fontSize: "13px",
             color: "#333333",
             lineHeight: "1.2em",
-            maxHeight: "calc(1.2em * 12)",
+            maxHeight: expanded ? "none" : "calc(1.2em * 12)",
             overflow: "hidden",
             display: "-webkit-box",
             WebkitBoxOrient: "vertical",
-            WebkitLineClamp: 12,
+            WebkitLineClamp: expanded ? "unset" : 12,
           }}
         >
           {job?.jobDetailsFromCompany}
@@ -117,8 +99,9 @@ export default function JobCard({ job }) {
             bottom: 0,
             width: "100%",
             height: "7em",
-            backgroundImage:
-              "linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1))",
+            backgroundImage: expanded
+              ? ""
+              : "linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1))",
           }}
         />
         <Typography
@@ -134,8 +117,9 @@ export default function JobCard({ job }) {
             pointerEvents: "auto",
             zIndex: 1,
           }}
+          onClick={toggleExpansion}
         >
-          View Job
+          {expanded ? "View Less" : "View Job"}
         </Typography>
       </Box>
       <Box sx={{ pl: 2, pt: 2 }}>
@@ -180,7 +164,20 @@ export default function JobCard({ job }) {
             backgroundColor: "#4943da",
           }}
         >
-          <Box sx={{ pt: 1, pr: 1 }}></Box>
+          <Box sx={{ pt: 1, pr: 1, gap: 1, pb: 1 }} display="flex">
+            <img
+              src="/images/profile.jpg"
+              width="18px"
+              height="18px"
+              style={{ borderRadius: "50%", filter: "blur(1px)" }}
+            />
+            <img
+              src="/images/profile.jpg"
+              width="18px"
+              height="18px"
+              style={{ borderRadius: "50%", filter: "blur(1px)" }}
+            />
+          </Box>
           Unlock referral asks
         </Button>
       </Box>
