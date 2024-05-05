@@ -19,7 +19,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function JobCard() {
+export default function JobCard({ job }) {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -51,9 +51,10 @@ export default function JobCard() {
       </Box>
       <Box sx={{ p: 2, pb: 1, display: "flex" }}>
         <Box>
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+          {/* <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
             R
-          </Avatar>
+          </Avatar> */}
+          <img src={`${job?.logoUrl}`} alt="..." width="30px" height="40px" />
         </Box>
         <Box sx={{ display: "flex", flexDirection: "column", ml: 2 }}>
           <Typography
@@ -61,19 +62,26 @@ export default function JobCard() {
             gutterBottom
             sx={{ fontSize: "14px", color: "gray" }}
           >
-            Ema
+            {job?.companyName}
           </Typography>
           <Typography variant="body" gutterBottom sx={{ fontSize: "15px" }}>
-            Software Productivity Engineer
+            {job?.jobRole.replace(/\b\w/g, (match) => match.toUpperCase())}
           </Typography>
           <Typography variant="body" gutterBottom sx={{ fontSize: "12px" }}>
-            Banglore
+            {job?.location.replace(/\b\w/g, (match) => match.toUpperCase())}
           </Typography>
         </Box>
       </Box>
       <Box sx={{ pl: 2 }} display="flex">
         <Typography sx={{ fontSize: "14px", color: "gray", fontWeight: 500 }}>
-          Estimated Salary: ₹30 - 50 LPA
+          Estimated Salary:{" "}
+          {job.minJdSalary && job.maxJdSalary
+            ? `${job.minJdSalary} - ${job.maxJdSalary} LPA`
+            : job.minJdSalary
+            ? `min. ${job.minJdSalary} LPA`
+            : job.maxJdSalary
+            ? `max. ${job.maxJdSalary} LPA`
+            : "-"}
         </Typography>
         <Box sx={{ pl: 1 }}>
           <img src="/images/check.png" width="14px" height="14px"></img>
@@ -101,20 +109,7 @@ export default function JobCard() {
             WebkitLineClamp: 12,
           }}
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-          tincidunt mi nec ipsum finibus, vel sollicitudin purus convallis.
-          Donec congue dolor nec ex ullamcorper consequat. Nullam vitae sapien
-          id eros laoreet hendrerit. Proin interdum magna ut tortor vehicula,
-          vitae malesuada sem suscipit. Duis consectetur consectetur velit,
-          vitae vestibulum nunc fringilla nec. Integer in nunc et nibh
-          scelerisque mattis. Quisque condimentum erat quis ipsum convallis
-          eleifend. Vivamus tempus nibh vitae justo venenatis, sit amet
-          convallis mi consequat. Integer scelerisque vestibulum arcu, in
-          tincidunt arcu lacinia nec. Donec euismod ligula nec nulla faucibus,
-          et fermentum ligula venenatis. Maecenas ultricies risus justo, eget
-          accumsan justo molestie non. In eget placerat est. Sed feugiat lectus
-          nec felis scelerisque, eu feugiat mi semper. Vivamus ullamcorper
-          sapien vel odio tincidunt, vitae facilisis dolor bibendum.
+          {job?.jobDetailsFromCompany}
         </Typography>
         <div
           style={{
@@ -147,7 +142,13 @@ export default function JobCard() {
         <Typography sx={{ fontSize: "14px", color: "gray", fontWeight: 500 }}>
           Minimum Experience
         </Typography>
-        <Typography sx={{ fontSize: "14px" }}>8 years</Typography>
+        <Typography sx={{ fontSize: "14px" }}>
+          {job.minExp
+            ? job.minExp > 1
+              ? `${job.minExp} years`
+              : `${job.minExp} year`
+            : "-"}
+        </Typography>
       </Box>
       <Box sx={{ p: 1 }}>
         <Button
