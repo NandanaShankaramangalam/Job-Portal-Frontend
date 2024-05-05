@@ -2,6 +2,7 @@ import React from "react";
 import Filter from "../components/Filter";
 import { filters } from "../utils/constants";
 import Search from "../components/Search";
+import JobCard from "../components/JobCard";
 
 const JobBoard = () => {
   return (
@@ -15,6 +16,9 @@ const JobBoard = () => {
           );
         })}
         <Search />
+      </div>
+      <div style={{ paddingBottom: "30px" }}>
+        <JobCard />
       </div>
     </>
   );
