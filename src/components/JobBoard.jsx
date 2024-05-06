@@ -15,6 +15,7 @@ const JobBoard = () => {
   const jobState = useSelector((state) => state.jobs);
   const dispatch = useDispatch();
 
+  //Infinite scroll
   useEffect(() => {
     fetchData((page - 1) * 10);
     window.addEventListener("scroll", handleScroll);
